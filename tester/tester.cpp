@@ -169,6 +169,7 @@ namespace testcppgrlib
 			except_rot_90x45y_30z.set_row(2, { 2, -2 * sqr3, 0 });
 			except_rot_90x45y_30z = except_rot_90x45y_30z * 0.25;
 
+
 			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(0, 0, 0) == Matrix::identity(3)));
 			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(180, 0, 0) == except_rot_x));
 			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(0, 180, 0) == except_rot_y));
