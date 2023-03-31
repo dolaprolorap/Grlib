@@ -1,2 +1,2 @@
-# lab1_kg(remake)
+# Grlib
 Computer graphic project for Pavel Aleksandrovich
