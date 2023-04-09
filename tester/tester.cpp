@@ -170,13 +170,16 @@ namespace testcppgrlib
 			except_rot_90x45y_30z = except_rot_90x45y_30z * 0.25;
 
 
-			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(0, 0, 0) == Matrix::identity(3)));
-			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(180, 0, 0) == except_rot_x));
-			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(0, 180, 0) == except_rot_y));
-			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(0, 0, 180) == except_rot_z));
-			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(90, 0, 0) == except_rot90x));
-			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(90, 0, 90) == except_rot90x90z));
-			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(-90, 45, -30) == except_rot_90x45y_30z));
+			Assert::AreEqual("true", boolstr(Matrix::xyz_rotation_matrix(0, 0, 0) == Matrix::identity(3)));
+			Assert::AreEqual("true", boolstr(Matrix::xyz_rotation_matrix(180, 0, 0) == except_rot_x));
+			Assert::AreEqual("true", boolstr(Matrix::xyz_rotation_matrix(0, 180, 0) == except_rot_y));
+			Assert::AreEqual("true", boolstr(Matrix::xyz_rotation_matrix(0, 0, 180) == except_rot_z));
+			Assert::AreEqual("true", boolstr(Matrix::xyz_rotation_matrix(90, 0, 0) == except_rot90x));
+			Assert::AreEqual("true", boolstr(Matrix::xyz_rotation_matrix(90, 0, 90) == except_rot90x90z));
+			Assert::AreEqual("true", boolstr(Matrix::xyz_rotation_matrix(-90, 45, -30) == except_rot_90x45y_30z));
+			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(90, 3, 1, 2) == Matrix::xyz_rotation_matrix(90, 0, 0)));
+			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(90, 3, 2, 0) == Matrix::xyz_rotation_matrix(0, 90, 0)));
+			Assert::AreEqual("true", boolstr(Matrix::rotation_matrix(45, 3, 0, 1) == Matrix::xyz_rotation_matrix(0, 0, 45)));
 		}
 	};
 
@@ -234,6 +237,208 @@ namespace testcppgrlib
 		TEST_METHOD(TestGlobalObjs) {
 			VectorSpace vs = *new VectorSpace(3);
 			CoordinateSystem cs = *new CoordinateSystem(*new Point(1., 3., 4.));
+		}
+	};
+
+	TEST_CLASS(StrFormaterTest) {
+	public:
+		TEST_METHOD(GetStr) {
+			StrFormater sf1("adsf", "sf");
+			StrFormater sf2("adsf{0}", "sf");
+			StrFormater sf3("adsf{0}{1}", "sf", "123");
+			StrFormater sf4("{2}adsf{0}{1}", "sf", "123", "---");
+			StrFormater sf5("{2}adsf{0}{1}", "sf", "123", "---", "qwe");
+			StrFormater sf6("{2}adsf{0}{1}");
+
+			Assert::AreEqual("true", boolstr(sf1.get_str() == "adsf"));
+			Assert::AreEqual("true", boolstr(sf2.get_str() == "adsfsf"));
+			Assert::AreEqual("true", boolstr(sf3.get_str() == "adsfsf123"));
+			Assert::AreEqual("true", boolstr(sf4.get_str() == "---adsfsf123"));
+			Assert::AreEqual("true", boolstr(sf5.get_str() == "---adsfsf123"));
+			sf6.set_args("-1-", "-2-", "-3-");
+			Assert::AreEqual("-3-adsf-1--2-", sf6.get_str().c_str());
+			sf6.del_args();
+			sf6.set_args("(1)", "(2)", "(3)");
+			Assert::AreEqual("(3)adsf(1)(2)", sf6.get_str().c_str());
+			sf6.del_args();
+			sf6.set_args("", "", "");
+			Assert::AreEqual("adsf", sf6.get_str().c_str());
+		}
+	};
+
+	void Test1() {
+		Matrix m = *new Matrix(-1, -1);
+	}
+
+	void Test2() {
+		Matrix m = *new Matrix(1, 1);
+		m(2, 2) = 9;
+	}
+
+	void Test3() {
+		Matrix m = *new Matrix(2, 2);
+		m.set_row(4, { 1, 2 });
+	}
+
+	void Test4() {
+		Matrix m = *new Matrix(2, 2);
+		m.set_row(1, { 1, 2, 3, 4, 5 });
+	}
+
+	void Test5() {
+		Matrix m = *new Matrix(2, 2);
+		double i = m(4, 4);
+	}
+
+	void Test6() {
+		Matrix m1 = *new Matrix(2, 2);
+		Matrix m2 = *new Matrix(3, 3);
+		m1 + m2;
+	}
+
+	void Test7() {
+		Matrix m1 = *new Matrix(1, 2);
+		Matrix m2 = *new Matrix(3, 6);
+		m1 * m2;
+	}
+
+	void Test8() {
+		Matrix m = *new Matrix(2, 1);
+		m.det();
+	}
+
+	void Test9() {
+		Matrix m = *new Matrix(2, 2);
+		m.inverse();
+	}
+
+	void Test10() {
+		Matrix::identity(-2);
+	}
+
+	void Test11() {
+		Matrix::rotation_matrix(34, 4, 5, 5);
+	}
+
+	TEST_CLASS(MatrixExceptionTest) {
+	public:
+		TEST_METHOD(General) {
+			auto test1 = [] { Test1(); };
+			Assert::ExpectException<InvalidArgumentException>(test1);
+
+			auto test2 = [] { Test2(); };
+			Assert::ExpectException<InvalidMatrixIndexException>(test2);
+
+			auto test3 = [] { Test3(); };
+			Assert::ExpectException<InvalidMatrixIndexException>(test3);
+
+			auto test4 = [] { Test4(); };
+			Assert::ExpectException<OverflowMatrixInsertException>(test4);
+
+			auto test5 = [] { Test5(); };
+			Assert::ExpectException<InvalidMatrixIndexException>(test5);
+
+			auto test6 = [] { Test6(); };
+			Assert::ExpectException<IncompatibleMatricesSizesException>(test6);
+
+			auto test7 = [] { Test7(); };
+			Assert::ExpectException<IncompatibleMatricesSizesException>(test7);
+
+			auto test8 = [] { Test8(); };
+			Assert::ExpectException<NotSquareMatrixException>(test8);
+
+			auto test9 = [] { Test9(); };
+			Assert::ExpectException<IsSingularMatrixException>(test9);
+
+			auto test10 = [] { Test10(); };
+			Assert::ExpectException<InvalidArgumentException>(test10);
+
+			auto test11 = [] { Test11(); };
+			Assert::ExpectException<InvalidArgumentException>(test11);
+		}
+	};
+
+	void VectorExcTest1() {
+		Matrix m = *new Matrix(2, 2);
+		Vector v = *new Vector(m);
+	}
+
+	void VectorExcTest2() {
+		Vector v = *new Vector(2);
+		v(5) = 6;
+	}
+
+	void VectorExcTest3() {
+		Vector v = *new Vector(2);
+		double val = v(5);
+	}
+
+	void VectorExcTest4() {
+		Vector v1 = *new Vector(3);
+		Vector v2 = *new Vector(2);
+
+		v1 ^ v2;
+	}
+
+	void VectorExcTest5() {
+		Vector v1 = *new Vector(4);
+		Vector v2 = *new Vector(4);
+		
+		v1 ^ v2;
+	}
+
+	TEST_CLASS(VectorExceptionTest) {
+	public:
+		TEST_METHOD(General) {
+			auto test1 = [] { VectorExcTest1(); };
+			Assert::ExpectException<InvalidArgumentException>(test1);
+
+			auto test2 = [] { VectorExcTest2(); };
+			Assert::ExpectException<InvalidVectorIndex>(test2);
+
+			auto test3 = [] { VectorExcTest3(); };
+			Assert::ExpectException<InvalidVectorIndex>(test3);
+
+			auto test4 = [] { VectorExcTest4(); };
+			Assert::ExpectException<IncompatibleVectorSizes>(test4);
+
+			auto test5 = [] { VectorExcTest5(); };
+			Assert::ExpectException<InvalidArgumentException>(test5);
+		}
+	};
+	
+	void BilinearFormExcTest1() {
+		Vector v1 = *new Vector(4);
+		Vector v2 = *new Vector(5);
+		Matrix m = *new Matrix(6, 7);
+		bilinear_form(m, v1, v2);
+	}
+
+	TEST_CLASS(BilinearFormException) {
+	public:
+		TEST_METHOD(General) {
+			auto test1 = [] { BilinearFormExcTest1(); };
+			Assert::ExpectException<InvalidArgumentException>(test1);
+		}
+	};
+
+	void VectorSpaceExcTest1() {
+		VectorSpace vs = *new VectorSpace(-2);
+	}
+
+	void VectorSpaceExcTest2() {
+		std::vector<Vector*> basis = *new std::vector<Vector*>();
+		VectorSpace vs = *new VectorSpace(&basis);
+	}
+
+	TEST_CLASS(VectorSpaceException) {
+	public:
+		TEST_METHOD(General) {
+			auto test1 = [] { VectorSpaceExcTest1(); };
+			Assert::ExpectException<InvalidArgumentException>(test1);
+
+			auto test2 = [] { VectorSpaceExcTest2(); };
+			Assert::ExpectException<InvalidArgumentException>(test2);
 		}
 	};
 }

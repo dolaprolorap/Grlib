@@ -130,24 +130,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GlobalFuncs.cpp" />
+    <ClCompile Include="GlobalFunctions.cpp" />
     <ClCompile Include="CoordinateSystem.cpp" />
-    <ClCompile Include="GrlibHeaders\GrlibException.cpp" />
+    <ClCompile Include="GrlibException.cpp" />
+    <ClCompile Include="IncompatibleMatricesSizesException.cpp" />
+    <ClCompile Include="IncompatibleVectorSizes.cpp" />
+    <ClCompile Include="InvalidArgumentException.cpp" />
+    <ClCompile Include="InvalidMatrixIndexException.cpp" />
+    <ClCompile Include="InvalidObjectException.cpp" />
+    <ClCompile Include="InvalidVectorIndex.cpp" />
+    <ClCompile Include="IsSingularMatrixException.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="NotSquareMatrixException.cpp" />
+    <ClCompile Include="OverflowMatrixInsertException.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="StrFormater.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="VectorSpace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GrlibHeaders\CoordinateSystem.h" />
-    <ClInclude Include="GrlibHeaders\GlobalFuncs.h" />
+    <ClInclude Include="GrlibHeaders\GlobalFunctions.h" />
     <ClInclude Include="GrlibHeaders\Grlib.h" />
     <ClInclude Include="GrlibHeaders\GrlibConsts.h" />
     <ClInclude Include="GrlibHeaders\GrlibException.h" />
+    <ClInclude Include="GrlibHeaders\IncompatibleMatricesSizesException.h" />
+    <ClInclude Include="GrlibHeaders\IncompatibleVectorSizes.h" />
+    <ClInclude Include="GrlibHeaders\InvalidArgumentException.h" />
+    <ClInclude Include="GrlibHeaders\InvalidMatrixIndexException.h" />
+    <ClInclude Include="GrlibHeaders\InvalidObjectException.h" />
+    <ClInclude Include="GrlibHeaders\InvalidVectorIndex.h" />
+    <ClInclude Include="GrlibHeaders\IsSingularMatrixException.h" />
     <ClInclude Include="GrlibHeaders\Matrix.h" />
+    <ClInclude Include="GrlibHeaders\NotSquareMatrixException.h" />
     <ClInclude Include="GrlibHeaders\Point.h" />
+    <ClInclude Include="GrlibHeaders\StrFormater.h" />
     <ClInclude Include="GrlibHeaders\Vector.h" />
     <ClInclude Include="GrlibHeaders\VectorSpace.h" />
+    <ClInclude Include="GrlibHeaders\OverflowMatrixInsertException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,8 +11,7 @@ Vector::Vector(int dim) : Matrix(dim, 1) {}
 
 Vector::Vector(const Matrix& m) : Matrix(m.get_height(), 1) {
 	if (m.get_width() != 1) {
-		std::string err_str = "Invalid width of matrix: (" + std::to_string(m.get_width()) + ")";
-		throw new GrlibException(err_str.c_str());
+		throw InvalidArgumentException(("Invalid width of matrix: (" + std::to_string(m.get_width()) + ")").c_str());
 	}
 
 	for (int i = 0; i < m.get_height(); i++) {
@@ -22,8 +21,7 @@ Vector::Vector(const Matrix& m) : Matrix(m.get_height(), 1) {
 
 double& Vector::operator() (int n) {
 	if (n < 0 || n >= _height) {
-		std::string err_str = "Invalid index: (" + std::to_string(n) + ")";
-		throw new GrlibException(err_str.c_str());
+		throw InvalidVectorIndex(n);
 	}
 
 	return _values[n][0];
@@ -31,8 +29,7 @@ double& Vector::operator() (int n) {
 
 double Vector::operator() (int n) const {
 	if (n < 0 || n >= _height) {
-		std::string err_str = "Invalid index: (" + std::to_string(n) + ")";
-		throw new GrlibException(err_str.c_str());
+		throw InvalidVectorIndex(n);
 	}
 
 	return _values[n][0];
@@ -43,20 +40,17 @@ double Vector::orth_scalar_product (Vector v) {
 }
 
 double Vector::operator*(const Vector& v) {
-	return bilinear_form(gram_matrix(), (*this), v);
+	return bilinear_form(gram_matrix(*VectorSpace::get_basis()), (*this), v);
 }
 
 Vector Vector::operator^(const Vector& v) {
 	if (this->get_height() != v.get_height()) {
-		std::string err_str = "Vectors dimensions must be the same: this: " + std::to_string(this->get_height()) +
-			" | v: " + std::to_string(v.get_height());
-		throw new GrlibException(err_str.c_str());
+		throw IncompatibleVectorSizes(this->get_height(), v.get_height());
 	}
 
 	if (this->get_height() != 3) {
-		std::string err_str = "Vector product is defined only for 3 dimensions: this: " + std::to_string(this->get_height()) +
-			" | v: " + std::to_string(v.get_height());
-		throw new GrlibException(err_str.c_str());
+		throw InvalidArgumentException(("Vector product is defined only for 3 dimensions: this: " + std::to_string(this->get_height()) +
+			" | v: " + std::to_string(v.get_height())).c_str());
 	}
 
 	Vector& new_vector = *(new Vector(3));

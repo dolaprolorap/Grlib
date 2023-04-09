@@ -4,4 +4,5 @@
 #include "Point.h"
 #include "VectorSpace.h"
 #include "CoordinateSystem.h"
-#include "GlobalFuncs.h"
+#include "GlobalFunctions.h"
+#include "StrFormater.h"

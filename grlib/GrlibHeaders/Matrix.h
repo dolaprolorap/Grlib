@@ -4,11 +4,15 @@
 #include <exception>
 #include <string>
 #include "GrlibConsts.h"
-#include "GrlibException.h"
+#include "InvalidMatrixIndexException.h"
+#include "OverflowMatrixInsertException.h"
+#include "IncompatibleMatricesSizesException.h"
+#include "NotSquareMatrixException.h"
+#include "IsSingularMatrixException.h"
 
 class Vector;
-double rad2eul(double rad);
-double eul2rad(double eul);
+double rad_to_deg(double rad);
+double deg_to_rad(double deg);
 
 class Matrix {
 public:
@@ -34,7 +38,8 @@ public:
 	Matrix inverse();
 	Matrix transpose();
 	static Matrix& identity(int n);
-	static Matrix& rotation_matrix(double x_angle, double y_angle, double z_angle);
+	static Matrix& xyz_rotation_matrix(double x_angle, double y_angle, double z_angle);
+	static Matrix& rotation_matrix(double angle, int dim, int first_axis_num, int second_axis_num);
 	static Matrix& x_rotation_matrix(double angle);
 	static Matrix& y_rotation_matrix(double angle);
 	static Matrix& z_rotation_matrix(double angle);

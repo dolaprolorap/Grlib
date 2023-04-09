@@ -15,7 +15,7 @@ int main() {
 		std::cout << *v << std::endl;
 	}
 
-	std::cout << gram_matrix() << std::endl;
+	std::cout << gram_matrix(*VectorSpace::get_basis()) << std::endl;
 
 	Matrix m1(3, 3);
 	Matrix m(2, 1);
@@ -51,7 +51,15 @@ int main() {
 
 	std::cout << v->length() << std::endl;
 
-	std::cout << Matrix::rotation_matrix(0, 0, 0);
+	std::cout << Matrix::xyz_rotation_matrix(90, 0, 0);
+
+	std::cout << std::endl;
+
+	Matrix rot_m = Matrix::rotation_matrix(90, 3, 0, 2);
+	std::cout << rot_m;
+
+	rot_m = Matrix::xyz_rotation_matrix(0, 90, 0);
+	std::cout << rot_m;
 
 	return 0;
 }

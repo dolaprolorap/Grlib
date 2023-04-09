@@ -1,8 +1,9 @@
 #pragma once
 #include "VectorSpace.h"
-#include "GlobalFuncs.h"
+#include "GlobalFunctions.h"
 #include "Matrix.h"
-#include "GrlibException.h"
+#include "InvalidVectorIndex.h"
+#include "IncompatibleVectorSizes.h"
 
 class Vector : public Matrix {
 public:
