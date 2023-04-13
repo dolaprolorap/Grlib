@@ -17,6 +17,9 @@ int main() {
 
 	std::cout << gram_matrix(*VectorSpace::get_basis()) << std::endl;
 
+	Engine::set_vs(vs);
+	Engine::set_cs(cs);
+
 	Matrix m1(3, 3);
 	Matrix m(2, 1);
 

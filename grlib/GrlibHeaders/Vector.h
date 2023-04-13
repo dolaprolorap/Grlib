@@ -4,6 +4,7 @@
 #include "Matrix.h"
 #include "InvalidVectorIndex.h"
 #include "IncompatibleVectorSizes.h"
+#include "Engine.h"
 
 class Vector : public Matrix {
 public:

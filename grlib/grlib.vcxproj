@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GlobalFunctions.cpp" />
     <ClCompile Include="CoordinateSystem.cpp" />
     <ClCompile Include="GrlibException.cpp" />
@@ -144,12 +145,14 @@
     <ClCompile Include="NotSquareMatrixException.cpp" />
     <ClCompile Include="OverflowMatrixInsertException.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="SceneException.cpp" />
     <ClCompile Include="StrFormater.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="VectorSpace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GrlibHeaders\CoordinateSystem.h" />
+    <ClInclude Include="GrlibHeaders\Engine.h" />
     <ClInclude Include="GrlibHeaders\GlobalFunctions.h" />
     <ClInclude Include="GrlibHeaders\Grlib.h" />
     <ClInclude Include="GrlibHeaders\GrlibConsts.h" />
@@ -164,6 +167,7 @@
     <ClInclude Include="GrlibHeaders\Matrix.h" />
     <ClInclude Include="GrlibHeaders\NotSquareMatrixException.h" />
     <ClInclude Include="GrlibHeaders\Point.h" />
+    <ClInclude Include="GrlibHeaders\SceneException.h" />
     <ClInclude Include="GrlibHeaders\StrFormater.h" />
     <ClInclude Include="GrlibHeaders\Vector.h" />
     <ClInclude Include="GrlibHeaders\VectorSpace.h" />

@@ -53,10 +53,17 @@ Vector Vector::operator^(const Vector& v) {
 			" | v: " + std::to_string(v.get_height())).c_str());
 	}
 
+	std::vector<Vector*> basis = *Engine::get_vs()->get_basis();
+
+	double scalar_part_1 = (*this)(1) * v(2) - (*this)(2) * v(1);
+	double scalar_part_2 = (*this)(2) * v(0) - (*this)(0) * v(2);
+	double scalar_part_3 = (*this)(0) * v(1) - (*this)(1) * v(0);
+
 	Vector& new_vector = *(new Vector(3));
-	new_vector(0) = (*this)(1) * v(2) - (*this)(2) * v(1);
-	new_vector(1) = (*this)(2) * v(0) - (*this)(0) * v(2);
-	new_vector(2) = (*this)(0) * v(1) - (*this)(1) * v(0);
+	new_vector = new_vector + ((Matrix)(*basis[0]) * scalar_part_1);
+	new_vector = new_vector + ((Matrix)(*basis[1]) * scalar_part_2);
+	new_vector = new_vector + ((Matrix)(*basis[2]) * scalar_part_3);
+
 	return new_vector;
 }
 

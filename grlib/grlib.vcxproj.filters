@@ -72,6 +72,12 @@
     <ClCompile Include="OverflowMatrixInsertException.cpp">
       <Filter>Exceptions cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneException.cpp">
+      <Filter>Exceptions cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GrlibHeaders\Grlib.h">
@@ -129,6 +135,12 @@
       <Filter>Exceptions h</Filter>
     </ClInclude>
     <ClInclude Include="GrlibHeaders\OverflowMatrixInsertException.h">
+      <Filter>Exceptions h</Filter>
+    </ClInclude>
+    <ClInclude Include="GrlibHeaders\Engine.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="GrlibHeaders\SceneException.h">
       <Filter>Exceptions h</Filter>
     </ClInclude>
   </ItemGroup>

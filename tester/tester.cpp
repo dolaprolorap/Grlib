@@ -189,6 +189,7 @@ namespace testcppgrlib
 		TEST_METHOD(TestVectorOperations)
 		{
 			VectorSpace vs = *new VectorSpace(3);
+			Engine::set_vs(&vs);
 
 			Vector v1 = *new Vector(1.0, 2.0, 4.0);
 			Vector vcpy = *new Vector(v1);
